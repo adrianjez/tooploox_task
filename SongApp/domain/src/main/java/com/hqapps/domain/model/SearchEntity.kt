@@ -9,9 +9,9 @@ data class SearchEntity(
         val trackName: String
 ) : Parcelable {
     constructor(source: Parcel) : this(
-            source.readString(),
-            source.readString(),
-            source.readString()
+            source.readString() ?: "",
+            source.readString() ?: "",
+            source.readString() ?: ""
     )
 
     override fun describeContents() = 0
