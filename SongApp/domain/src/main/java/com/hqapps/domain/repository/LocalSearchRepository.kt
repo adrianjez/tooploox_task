@@ -4,8 +4,6 @@ import com.hqapps.domain.model.ListResponse
 import com.hqapps.domain.model.SearchEntity
 import io.reactivex.Observable
 
-interface SearchRepository {
-
-    fun searchRemote(query: String) : Observable<ListResponse<SearchEntity>>
+interface LocalSearchRepository {
     fun searchLocal(query: String) : Observable<ListResponse<SearchEntity>>
 }

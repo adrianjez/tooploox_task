@@ -1,6 +1,6 @@
 package com.hqapps.domain.interactor
 
-import com.hqapps.domain.repository.SearchRepository
+import com.hqapps.domain.repository.LocalSearchRepository
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -15,17 +15,17 @@ class LocalSearchUseCaseTest {
     private lateinit var localSearchUseCase: LocalSearchUseCase
 
     @Mock
-    private lateinit var mockSearchRepository: SearchRepository
+    private lateinit var mockLocalSearchRepository: LocalSearchRepository
 
     @Before
     fun setUp(){
-        localSearchUseCase = LocalSearchUseCase(mockSearchRepository)
+        localSearchUseCase = LocalSearchUseCase(mockLocalSearchRepository)
     }
 
     @Test
     fun test1(){
         localSearchUseCase.buildUseCaseObservable("hehe")
-        verify(mockSearchRepository)?.searchLocal("hehe")
-        verifyNoMoreInteractions(mockSearchRepository)
+        verify(mockLocalSearchRepository)?.searchLocal("hehe")
+        verifyNoMoreInteractions(mockLocalSearchRepository)
     }
 }

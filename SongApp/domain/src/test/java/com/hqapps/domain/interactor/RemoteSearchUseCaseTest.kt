@@ -1,6 +1,6 @@
 package com.hqapps.domain.interactor
 
-import com.hqapps.domain.repository.SearchRepository
+import com.hqapps.domain.repository.RemoteSearchRepository
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -14,17 +14,17 @@ class RemoteSearchUseCaseTest {
     private lateinit var remoteSearchUseCase: RemoteSearchUseCase
 
     @Mock
-    private lateinit var mockSearchRepository: SearchRepository
+    private lateinit var mockRemoteSearchRepository: RemoteSearchRepository
 
     @Before
     fun setUp() {
-        remoteSearchUseCase = RemoteSearchUseCase(mockSearchRepository)
+        remoteSearchUseCase = RemoteSearchUseCase(mockRemoteSearchRepository)
     }
 
     @Test
     fun test1() {
         remoteSearchUseCase.buildUseCaseObservable("hehe")
-        Mockito.verify(mockSearchRepository)?.searchLocal("hehe")
-        Mockito.verifyNoMoreInteractions(mockSearchRepository)
+        Mockito.verify(mockRemoteSearchRepository)?.searchRemote("hehe")
+        Mockito.verifyNoMoreInteractions(mockRemoteSearchRepository)
     }
 }
