@@ -29,7 +29,9 @@ class LocalSearchFragment : BaseSearchFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.searchDataFor("")
+        if(savedInstanceState == null) {
+            viewModel.searchDataFor("")
+        }
     }
 
     override fun searchDataFor(query: String) {

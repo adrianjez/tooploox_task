@@ -3,7 +3,7 @@ package com.hqapps.sample_app.di
 import android.app.Application
 import android.content.Context
 import com.hqapps.data.search.SearchServiceModule
-import com.hqapps.sample_app.presentation.search.MainApplication
+import com.hqapps.sample_app.presentation.MainApplication
 import dagger.Binds
 import dagger.Module
 import dagger.android.support.AndroidSupportInjectionModule

@@ -1,4 +1,4 @@
-package com.hqapps.sample_app.presentation.search
+package com.hqapps.sample_app.presentation
 
 import com.hqapps.sample_app.di.DaggerMyAppComponent
 

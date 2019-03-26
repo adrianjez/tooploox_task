@@ -24,7 +24,9 @@ class RemoteSearchFragment : BaseSearchFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.searchDataFor("jack+johnson")
+        if(savedInstanceState == null) {
+            viewModel.searchDataFor("jack+johnson")
+        }
     }
 
     override fun searchDataFor(query: String) {
@@ -36,6 +38,4 @@ class RemoteSearchFragment : BaseSearchFragment() {
     private fun processResponse(resp: ListResponse<SearchEntity>) {
         adapter.replaceData(resp.results)
     }
-
-
 }

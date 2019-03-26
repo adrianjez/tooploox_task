@@ -18,6 +18,10 @@ import javax.inject.Inject
 
 abstract class BaseSearchFragment : BaseFragment() {
 
+    companion object {
+        private const val RECYCLER_VIEW_STATE_BUNDLE_KEY = "recycler_view_state_bundle_key"
+    }
+
     @Inject
     protected lateinit var adapter: SearchAdapter
 
@@ -32,19 +36,46 @@ abstract class BaseSearchFragment : BaseFragment() {
         input_container.addTextChangedListener(textWatcher)
     }
 
+    override fun getState(): Bundle? {
+        val outState = Bundle()
+        textWatcher.saveState(outState)
+        outState.putParcelable(RECYCLER_VIEW_STATE_BUNDLE_KEY, recycler_view.layoutManager?.onSaveInstanceState())
+        adapter.saveState(outState)
+        return outState
+    }
+
+    override fun makeRestoreState(state: Bundle?) {
+        if(state != null){
+            textWatcher.restoreState(state)
+            adapter.restoreState(state)
+            (recycler_view.layoutManager as? LinearLayoutManager)?.onRestoreInstanceState(
+                    state.getParcelable(RECYCLER_VIEW_STATE_BUNDLE_KEY)
+            )
+        }
+    }
+
+    /**
+     * Abstract methods
+     */
     abstract fun searchDataFor(query: String)
 
-    protected fun processError(message: String){
+    /**
+     * Protected methods
+     */
+    protected fun processError(message: String) =
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
+
 
     protected fun processShowHideProgression(showOrHide: Boolean){
         progress_view.visibility = if (showOrHide) View.VISIBLE else View.GONE
     }
+
     /**
      * Private members
      */
     private val textWatcher =  object : TextWatcher {
+        private val QUERY_STATE_BUNDLE_KEY = "QUERY_STATE_BUNDLE_KEY"
+        private var currentSearchValue = ""
         private var timer = Timer()
         private val DELAY: Long = 1000 // in ms
         override fun afterTextChanged(s: Editable?) {
@@ -56,7 +87,8 @@ abstract class BaseSearchFragment : BaseFragment() {
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            if(s != null){
+            if(s != null && !currentSearchValue.contentEquals(s.toString())){
+                currentSearchValue = s.toString()
                 timer = Timer()
                 timer.schedule(object : TimerTask() {
                     override fun run() {
@@ -66,5 +98,12 @@ abstract class BaseSearchFragment : BaseFragment() {
             }
         }
 
+        fun saveState(outState: Bundle){
+            outState.putString(QUERY_STATE_BUNDLE_KEY, currentSearchValue)
+        }
+
+        fun restoreState(outState: Bundle?){
+            currentSearchValue = outState?.getString(QUERY_STATE_BUNDLE_KEY) ?: ""
+        }
     }
 }
