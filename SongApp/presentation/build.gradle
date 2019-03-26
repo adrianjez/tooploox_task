@@ -5,9 +5,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
-
     compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
-
     defaultConfig {
         minSdkVersion globalConfiguration["androidMinSdkVersion"]
         targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
@@ -18,26 +16,32 @@ android {
         testInstrumentationRunner globalConfiguration["testInstrumentationRunner"]
         testApplicationId globalConfiguration["testApplicationId"]
     }
+
+    signingConfigs {
+        releaseConfig {
+            keyAlias 'TooplooxKey'
+            keyPassword 'tooploox'
+            storeFile file('../AppKeystore')
+            storePassword 'tooploox'
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.releaseConfig
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
-
     def presentationDependencies = rootProject.ext.presentationDependencies
     def presentationTestDependencies = rootProject.ext.presentationTestDependencies
-
     implementation project(':domain')
     implementation project(':data')
-
     kapt presentationDependencies.daggerCompiler
     kapt presentationDependencies.androidProcessor
-
     implementation presentationDependencies.rxJava
     implementation presentationDependencies.rxAndroid
     implementation presentationDependencies.stdLib
@@ -53,7 +57,6 @@ dependencies {
     implementation presentationDependencies.androidSegmented
     implementation presentationDependencies.constraintLayout
     implementation presentationDependencies.androidMaterial
-
     androidTestImplementation presentationTestDependencies.coreLibrary
     androidTestImplementation presentationTestDependencies.runner
     androidTestImplementation presentationTestDependencies.rules
