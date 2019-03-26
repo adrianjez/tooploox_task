@@ -23,7 +23,7 @@ class LocalSearchUseCaseTest {
     }
 
     @Test
-    fun test1(){
+    fun testLocalSearchUseCaseInteraction(){
         localSearchUseCase.buildUseCaseObservable("hehe")
         verify(mockLocalSearchRepository)?.searchLocal("hehe")
         verifyNoMoreInteractions(mockLocalSearchRepository)

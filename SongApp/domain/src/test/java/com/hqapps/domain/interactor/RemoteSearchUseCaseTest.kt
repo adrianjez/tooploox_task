@@ -22,7 +22,7 @@ class RemoteSearchUseCaseTest {
     }
 
     @Test
-    fun test1() {
+    fun testRemoteSearchUseCaseInteraction() {
         remoteSearchUseCase.buildUseCaseObservable("hehe")
         Mockito.verify(mockRemoteSearchRepository)?.searchRemote("hehe")
         Mockito.verifyNoMoreInteractions(mockRemoteSearchRepository)
