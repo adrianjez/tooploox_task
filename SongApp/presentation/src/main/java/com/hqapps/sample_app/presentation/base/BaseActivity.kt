@@ -9,7 +9,9 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
 
     fun show(fragment: Fragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(containerId, fragment).addToBackStack(null).commit()
+        fragmentTransaction
+                .replace(containerId, fragment)
+                .commit()
     }
 
 }
