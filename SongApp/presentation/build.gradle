@@ -24,6 +24,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
@@ -62,5 +63,14 @@ dependencies {
     androidTestImplementation presentationTestDependencies.espressoIntents
     androidTestImplementation presentationTestDependencies.espressoAccessibility
     androidTestImplementation presentationTestDependencies.jUnitExt
+}
 
+
+android.applicationVariants.all { variant ->
+
+    variant.outputs.all { output ->
+        def formattedDate = new Date().format('yy_MM_dd')
+        def fileName = "SongApp" + "_V" + versionCode + "_" + formattedDate + "_" + "-${variant.versionName}.apk"
+        outputFileName = new File("folder_with_apk_build", fileName)
+    }
 }

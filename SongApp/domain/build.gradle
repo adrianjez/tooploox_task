@@ -40,6 +40,4 @@ dependencies {
     testImplementation domainTestDependencies.mockito
     testImplementation domainTestDependencies.assertj
 }
-repositories {
-    mavenCentral()
-}
+
